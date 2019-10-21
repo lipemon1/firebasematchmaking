@@ -232,11 +232,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3b5eac077f17534c810efcd298e1d0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UserToInvite:
-    id: 
-    name: 
-    email: 
+  CurrentUserId: -LrfhrLV-tc0KYV51JTA
+  UserIdToInvite: -LrfiD2cPpWU32Qk6etQ
   InviteTimeout: 0
+  CreatedInvites: []
 --- !u!4 &1218189394
 Transform:
   m_ObjectHideFlags: 0

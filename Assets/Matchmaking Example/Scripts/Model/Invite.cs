@@ -3,6 +3,7 @@
     [System.Serializable]
     public class Invite
     {
+        public string id;
         public string invitorUserId;
         public string invitedUserId;
         public Status status;
