@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "788709816032",
+    "firebase_url": "https://matchmaking-46289.firebaseio.com",
+    "project_id": "matchmaking-46289",
+    "storage_bucket": "matchmaking-46289.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:788709816032:android:3f1f2aa1d5c656e7aec285",
+        "android_client_info": {
+          "package_name": "com.ramonferreira.matchmakingfirebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "788709816032-t4c299d20qiikrgmcvokca5aucglp035.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1GbLjADWBe9D3ZAWoAnCWOMWZWkaFRAM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "788709816032-t4c299d20qiikrgmcvokca5aucglp035.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
