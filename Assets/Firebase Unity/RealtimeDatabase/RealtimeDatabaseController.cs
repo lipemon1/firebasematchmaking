@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Firebase.Database;
 using Firebase.Unity.Editor;
 using Newtonsoft.Json;
@@ -110,6 +111,21 @@ namespace Firebase_Unity.RealtimeDatabase
             });
         }
 
+        public static void WriteValueOnPath(IDictionary<string, object> updates, Action callback)
+        {
+            _currentDatabase.UpdateChildrenAsync(updates).ContinueWith(task =>
+            {
+                if (task.IsFaulted)
+                {
+                    Debug.LogError(task.Exception?.Message);
+                }
+                else if (task.IsCompleted)
+                {
+                    callback?.Invoke();
+                }
+            });
+        }
+
         #endregion
 
         #region Listeners
@@ -129,6 +145,26 @@ namespace Firebase_Unity.RealtimeDatabase
                     var snapshot = args.Snapshot;
                     var dataDeserialized = JsonConvert.DeserializeObject<T>(snapshot.GetRawJsonValue());
                     action?.Invoke(dataDeserialized, snapshot.Key);   
+                }
+            }
+        }
+        
+        private void OnListDataChanged<T>(object sender, ValueChangedEventArgs args, Action<List<KeyValuePair<string, T>>> listAction)
+        {
+            if (args.DatabaseError != null) {
+                Debug.LogError(args.DatabaseError.Message);
+            }
+            else
+            {
+                if (args.Snapshot.Value == null)
+                {
+                    Debug.LogError("There is no data with key: " + args.Snapshot.Key);
+                }
+                else
+                {
+                    var snapshot = args.Snapshot;
+                    var dataDeserialized = JsonConvert.DeserializeObject<Dictionary<string, T>>(snapshot.GetRawJsonValue());
+                    listAction?.Invoke(dataDeserialized?.ToList());   
                 }
             }
         }
@@ -154,6 +190,16 @@ namespace Firebase_Unity.RealtimeDatabase
             }
             
             _currentDatabaseDefaultInstance.GetReference(referenceToListen).ValueChanged += newListener;
+        }
+
+        public void AddListListener<T>(string referenceToListen, Action<List<KeyValuePair<string, T>>> callback)
+        {
+            void Listener(object sender, ValueChangedEventArgs args)
+            {
+                OnListDataChanged<T>(sender, args, callback);
+            }
+
+            AddListener(referenceToListen, Listener);
         }
 
         #endregion
